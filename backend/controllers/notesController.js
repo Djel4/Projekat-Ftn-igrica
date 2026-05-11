@@ -7,12 +7,12 @@ export async function registerPlayer (req, res) {
     try {
         const {name,password} = req.body
         //dodato hashovanje 
-        const salt = await bcrypt.getSalt(10);
+        const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         
         const newAcc = new Note({name, password: hashedPassword });
         const savedAcc = await newAcc.save();
-        res.status(201).json(savedAcc).message("Account created succesfully!");
+      res.status(201).json({ message: "Account created successfully!", data: savedAcc });
     
     } catch (error) {
         console.error("Error in createANode cotroler", error)
@@ -82,13 +82,13 @@ export async function getNewBestScore(req,res){
 export async function GetplayersBestScore(req,res){
     const {id, score} = req.body;
     try {
-        const currPlayer = await Node.findById(id);
+        const currPlayer = await Note.findById(id);
 
         if (score > currPlayer.score)
         {
-            player.score = score;
+            currPlayer.score = score;
             await currPlayer.save();
-            return res.status(200).json({message: "New bes personal score is: ", score: player.score});
+            return res.status(200).json({ message: "New best personal score is: ", score: currPlayer.score })
         }
         else {
             res.status(200).json({message: "Game over, you havent beaten your score YET (dont blame dev)"});
@@ -130,7 +130,7 @@ export async function getElementById(req,res) {
 export async function updateAcc (req, res) { 
     try {
         const {name, password} = req.body
-        const updatedAcc = await Node.findByIdAndUpdate(req.params.id,{name,password},{
+        const updatedAcc = await Note.findByIdAndUpdate(req.params.id,{name,password},{
             new:true,
         })
             if(!updatedAcc)

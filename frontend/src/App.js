@@ -1,6 +1,7 @@
-import react from 'react'
+import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import HomeScreens from './screens/HomeScreens'
 import { Container } from 'react-bootstrap'
 
 
@@ -10,8 +11,9 @@ const App = () => {
   <Header />
   <main className="py-3">
      <Container>
-    <h1>Welcome to Hospinia online Web Game</h1>
-    <p>Please continue to login or sing in</p>
+   <HomeScreens>
+   </HomeScreens>
+    <p>Please proceed to login or sing in</p>
 
     </Container>
   </main>

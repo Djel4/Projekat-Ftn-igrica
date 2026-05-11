@@ -7,18 +7,19 @@ import { getElementById, getAllNotes, updateAcc, deleteAAcc, getNewBestScore, re
 const router = express.Router();
 
 //login i register rute
-router.post("/",registerPlayer);
+router.post("/register",registerPlayer);
 
-router.get("/",loginPlayer);
+router.post("/login",loginPlayer);
 
 //leaderboard i score
-router.get("/:id",getLeaderBoard);
+router.get("/leaderboard",getLeaderBoard);
 
-router.get("/:id",getNewBestScore);
+router.get("/global-best",getNewBestScore);
 
 router.put("/save-score", GetplayersBestScore);
 
 router.get("/new-best", getNewBestScore);
+
 //crud rrute 
 router.get("/", getAllNotes);
 

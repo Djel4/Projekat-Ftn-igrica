@@ -18,6 +18,9 @@ app.use(express.json()); //funkcija izmedju requesta i responsa
 
 app.use("/api/notes", notesRoutes);
 const PORT = process.env.PORT || 5001
+app.get("/", (req, res) => {
+    res.send("Server is running! Try /api/notes to see data.");
+});
 app.listen(PORT, async () => {
     await connectDB();
 console.log("Server started on PORT:", PORT)

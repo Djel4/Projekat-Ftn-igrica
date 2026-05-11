@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => {
     return (
@@ -7,7 +7,7 @@ const Footer = () => {
             <Container>
                 <Row>
                     <Col className="text-center py-3">
-                        <p>&copy; {currentYear} Hospinia Web Game. All rigths</p>
+                        <p>&copy; 2026 Hospinia Web Game. All rigths</p>
                     </Col>
                 </Row>
             </Container>
