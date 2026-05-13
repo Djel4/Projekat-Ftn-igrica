@@ -1,21 +1,44 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import products from "../products_list"; 
 import Product from "../components/Product"; 
 
 const HomeScreen = () => {
     return (
-        <>
-            <h1>Novi proizvodi</h1>
-            <Row>
-                {products.map((product) => (
-                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                        <Product product={product} />
-                    </Col>
-                ))}
+      <Container className="text-center mt-5">
+            <h1 className="mb-5 display-1 fw-bold">BLASTING WAVES</h1>
+
+            <Row className="justify-content-center mb-3">
+                <Col md={4}>
+                    <Button variant="outline-primary" size="lg" className="w-100 shadow">
+                        Start Game
+                    </Button>
+                </Col>
             </Row>
-        </>
+
+            <Row className="justify-content-center mb-3">
+                
+                <Col md={4}>
+                    <LinkContainer to="/leaderboard">
+                        <Button variant="outline-primary" size="lg" className="w-100">
+                            LeaderBoard
+                        </Button>
+                    </LinkContainer>
+                </Col>
+            </Row>
+            <Row className="justify-content-center mb-3">
+                <Col md={4}>
+                <LinkContainer to="/options">
+                <Button variant="outline-primary" size="lg" className="w-100">
+                    Options
+                </Button>
+                </LinkContainer>
+                </Col>
+                
+            </Row>
+    </Container>
     );
 };
 
-export default HomeScreen
+export default HomeScreen;

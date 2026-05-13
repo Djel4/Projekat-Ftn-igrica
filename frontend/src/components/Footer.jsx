@@ -6,8 +6,8 @@ const Footer = () => {
         <footer>
             <Container>
                 <Row>
-                    <Col className="text-center py-3">
-                        <p>&copy; 2026 Hospinia Web Game. All rigths</p>
+                    <Col className="text-center py-5">
+                        <p>&copy; 2026 Blasting waves Web Game. All rigths</p>
                     </Col>
                 </Row>
             </Container>
@@ -16,4 +16,4 @@ const Footer = () => {
     )
 
 }
-export default Footer
+export default Footer;

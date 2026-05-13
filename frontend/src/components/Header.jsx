@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { FaShoppingCart, FaUser} from 'react-icons/fa'
-import logo from '../assets/logo.png'
+import logo from '../assets/game.png'
 import { LinkContainer } from 'react-router-bootstrap'
 const Header = () => {
     return (
@@ -11,8 +11,8 @@ const Header = () => {
             <Container>
                 <LinkContainer to="/">
                 <Navbar.Brand>
-                <img src={logo} alt="Hospinia" logo width="30" height="30" className="d-inline-block alling-top me-2" />
-                <span className="fw-bold">Hospinia web game</span>
+                <img src={logo} alt="Blasting waves" logo width="30" height="30" className="d-inline-block alling-top me-2" />
+                <span className="fw-bold">Blasting Waves</span>
                 Creation by Djel4
                 </Navbar.Brand>
                  </LinkContainer>
@@ -36,4 +36,4 @@ const Header = () => {
     )
 
 }
-export default Header
+export default Header;

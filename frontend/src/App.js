@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeScreens from './screens/HomeScreens'
-import { Container } from 'react-bootstrap'
+import { Container, Col, Row } from 'react-bootstrap'
 
 
 const App = () => {
@@ -13,7 +13,12 @@ const App = () => {
      <Container>
    <HomeScreens>
    </HomeScreens>
-    <p>Please proceed to login or sing in</p>
+   <Row>
+    <Col className='text-center py-5'>
+      <p >Please proceed to login or sing in</p>
+    </Col>
+   </Row>
+    
 
     </Container>
   </main>
