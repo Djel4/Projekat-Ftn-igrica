@@ -27,6 +27,16 @@ const HomeScreen = () => {
                     </LinkContainer>
                 </Col>
             </Row>
+                <Row className="justify-content-center mb-3">
+                <Col md={4}>
+                <LinkContainer to="/options">
+                <Button variant="outline-primary" size="lg" className="w-100">
+                    Register
+                </Button>
+                </LinkContainer>
+                </Col>
+                
+            </Row>
             <Row className="justify-content-center mb-3">
                 <Col md={4}>
                 <LinkContainer to="/options">
@@ -37,6 +47,7 @@ const HomeScreen = () => {
                 </Col>
                 
             </Row>
+             
     </Container>
     );
 };

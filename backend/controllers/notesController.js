@@ -38,7 +38,7 @@ export async function loginPlayer(req,res)
             return res.status(404).json({message: "Name or password are wrong try again"});
         }
         else{
-            return res.status(200).json({message: "Congrats you login is correnct have fun playing (dont blame dev for bugs)"});
+            return res.status(200).json({message: "Congrats your login is correct have fun playing (dont blame dev for bugs)"});
         }
 
     } catch (error) {
@@ -159,4 +159,6 @@ export async function deleteAAcc (req, res) {
            console.error("Error in deleteNode cotroler", error)
         res.status(500).json({message: "Internal server error" });
     }
+
+    
 }
