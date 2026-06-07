@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/styles/bootstrap.min.css';
 import { 
   createBrowserRouter, 
   createRoutesFromElements,
@@ -15,11 +15,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import HomeScreen from './screens/HomeScreens';
-
+import GameScreen from './screens/GameScreen';
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path="/" element={<App />}>
     <Route index={true} path="/" element={<HomeScreen/>}></Route>
+    <Route path="/game" element={<GameScreen />} />
     </Route>
 )
 );
