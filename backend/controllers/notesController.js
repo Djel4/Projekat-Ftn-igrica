@@ -43,11 +43,17 @@ export async function loginPlayer(req,res)
             process.env.JWT_SECRET,
             { expiresIn: "7d" }
         );
+
+        res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000
+        });
         
             return res.status(200).json({message: "Congrats your login is correct have fun playing (dont blame dev for bugs)",
                 id: player._id,
                 currentSkin: player.currentSkin,
-                token: token
           
         });
 
@@ -202,6 +208,57 @@ export async function getElementById(req,res) {
     }
 }
 
+const SKIN_PRICES = {
+    "startrack": 150,
+    "kal'ed": 250,
+    "noutolan": 700,
+    "nairan":900,
+};
+
+export async function buySkin(req, res) {
+    try {
+        const { skin } = req.body;
+        const player = await Note.findById(req.params.id);
+
+        if (!player) {
+            return res.status(404).json({ message: "Player not found" });
+        }
+
+        // da li skin postoji u listi
+        if (!SKIN_PRICES[skin]) {
+            return res.status(400).json({ message: "This skin does not exist" });
+        }
+
+        // da li vec ima skin
+        if (player.skins.includes(skin)) {
+            return res.status(400).json({ message: "You already own this skin" });
+        }
+
+        // da li ima dovoljno coins
+        if (player.coins < SKIN_PRICES[skin]) {
+            return res.status(400).json({ 
+                message: "You don't have enough coins",
+                required: SKIN_PRICES[skin],
+                have: player.coins
+            });
+        }
+
+        // kupi skin
+        player.coins -= SKIN_PRICES[skin];
+        player.skins.push(skin);
+        await player.save();
+
+        res.status(200).json({
+            message: `Skin '${skin}' kupljen uspesno!`,
+            coins: player.coins,
+            skins: player.skins
+        });
+
+    } catch (error) {
+        console.error("Error in buySkin", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 export async function updateAcc (req, res) { 
     try {

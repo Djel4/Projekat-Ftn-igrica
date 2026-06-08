@@ -4,13 +4,17 @@ dotenv.config();
 
 import express from "express"
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import notesRoutes from "./routes/notesRoutes.js"
 import { connectDB } from "./config/db.js";
-
+import { notFound, errorHandler } from "./middleware/errorHandler.js";
 const app = express();
 
 
-app.use(cors()); // dodato po savetu sa interneta
+app.use(cors({
+    origin: "http://localhost:3000", //adresa na kojoj je frontend, moze biti i adresa na kojoj ce biti hostovan frontend
+    credentials: true //dozvoljava slanje cookia
+})); // dodato po savetu sa interneta
 
 app.use(express.json()); //funkcija izmedju requesta i responsa
 
@@ -26,3 +30,10 @@ app.listen(PORT, async () => {
 console.log("Server started on PORT:", PORT)
 })
 
+app.use(notFound);
+app.use(errorHandler);
+
+app.listen(PORT, async () => {
+    await connectDB();
+    console.log(`Server started on port ${PORT}`);
+});

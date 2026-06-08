@@ -23,6 +23,7 @@ router.get("/new-best", getNewBestScore);
 router.get("/skins/:id", getPlayerSkins);
 router.put("/skins/:id", setActiveSkin);
 router.put("/unlock-skin/:id", unlockSkin);
+router.post("/buy-skin/:id", protect, buySkin);
 
 //crud rrute 
 router.get("/", getAllNotes);

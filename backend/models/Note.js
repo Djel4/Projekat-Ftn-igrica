@@ -26,11 +26,15 @@ const noteSchema = new mongoose.Schema(
         type: [String],
         default: ["defaultSkin"]
     },
-    
+
     currentSkin: {
         type: String,
         default: "defaultSkin"
     },
+    coins: { //koristim kao valutu u igri 
+    type: Number,
+    default: 0
+}
 
     
 },
