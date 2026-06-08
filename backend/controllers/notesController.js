@@ -37,12 +37,19 @@ export async function loginPlayer(req,res)
         {
             return res.status(404).json({message: "Name or password are wrong try again"});
         }
-        else{
+        //dodato za generisanje tokena
+           const token = jwt.sign(
+            { id: player._id, name: player.name },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+        
             return res.status(200).json({message: "Congrats your login is correct have fun playing (dont blame dev for bugs)",
                 id: player._id,
-                currentSkin: player.currentSkin
-            });
-        }
+                currentSkin: player.currentSkin,
+                token: token
+          
+        });
 
     } catch (error) {
         console.error("Error in getLeaderboard method", error);
