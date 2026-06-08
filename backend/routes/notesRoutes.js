@@ -1,7 +1,7 @@
 
 
 import express from "express"
-import { getElementById, getAllNotes, updateAcc, deleteAAcc, getNewBestScore, /*getSkins,*/  registerPlayer, loginPlayer,GetplayersBestScore, getLeaderBoard} from "../controllers/notesController.js";
+import { getElementById, getAllNotes, updateAcc, deleteAAcc, getNewBestScore, registerPlayer, loginPlayer, getPlayerSkins, setActiveSkin, unlockSkin, GetplayersBestScore, getLeaderBoard} from "../controllers/notesController.js";
 
 
 const router = express.Router();
@@ -20,7 +20,9 @@ router.put("/save-score", GetplayersBestScore);
 
 router.get("/new-best", getNewBestScore);
 
-//router.get("/skins", getSkins);
+router.get("/skins/:id", getPlayerSkins);
+router.put("/skins/:id", setActiveSkin);
+router.put("/unlock-skin/:id", unlockSkin);
 
 //crud rrute 
 router.get("/", getAllNotes);

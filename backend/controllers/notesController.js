@@ -38,7 +38,10 @@ export async function loginPlayer(req,res)
             return res.status(404).json({message: "Name or password are wrong try again"});
         }
         else{
-            return res.status(200).json({message: "Congrats your login is correct have fun playing (dont blame dev for bugs)"});
+            return res.status(200).json({message: "Congrats your login is correct have fun playing (dont blame dev for bugs)",
+                id: player._id,
+                currentSkin: player.currentSkin
+            });
         }
 
     } catch (error) {
@@ -98,8 +101,74 @@ export async function GetplayersBestScore(req,res){
     }
 }
 
+export async function getPlayerSkins(req,res){
+    try {
+        const player = await Note.findById(req.params.id).select("name skins currentSkin");
+        if(!player)
+            {
+                return res.status(404).json({message: "Player not found (blame dev for that)"});
+            }
+            res.status(200).json(player);   
+    } catch (error) {
+        console.error("Error in getPlayerSkins method", error);
+        res.status(500).json({message: "Internal server error, couldnt load skins (blame dev for that)"});
+    }
+}
+export async function setActiveSkin(req, res)
+{
+    try {
+    const { skin } = req.body;
+    const player = await Note.findById(req.params.id);
 
+    if (!player)
+    {
+        return res.status(404).json({message: "Player not found (blame dev for that)"});
+    }
 
+    if(!player.skins.includes(skin))
+    {
+        return res.status(400).json({message: "You dont own this skin"});
+    }
+    player.currentSkin = skin;
+    await player.save();
+
+    res.status(200).json({message: "Active skin updated successfully",
+        currentSkin: player.currentSkin
+    });
+    }
+    catch(error)
+    {
+        console.error("Error in setActiveSkin method", error);
+        res.status(500).json({message: "Internal server error, couldnt set active skin (blame dev for that)"});
+    }
+}
+export async function unlockSkin(req, res)
+{
+    try {
+        const { skin } = req.body;
+        const player = await Note.findById(req.params.id);
+
+        if(!player)
+        {
+            return res.status(404).json({message: "Player not found (blame dev for that)"});
+        }
+        if (player.skins.includes(skin))
+        {
+            return res.status(400).json({message: "You already own this skin"});
+        }
+
+        player.skins.push(skin);    
+        await player.save();
+
+        res.status(200).json({message: `Skin '${skin}' unlocked successfully`,
+             skins: player.skins
+            });
+    }
+        catch (error) {
+            console.error("Error in unlockSkin method", error);
+            res.status(500).json({message: "Internal server error, couldnt unlock skin (blame dev for that)"});
+        }
+}
 
 export async function getAllNotes(_, res) {//moze se skipovati za request ako se doda _ umesto njega
     try {

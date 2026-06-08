@@ -22,6 +22,16 @@ const noteSchema = new mongoose.Schema(
         type: Number,
         default: 1
     },
+    skins: {
+        type: [String],
+        default: ["defaultSkin"]
+    },
+    
+    currentSkin: {
+        type: String,
+        default: "defaultSkin"
+    },
+
     
 },
  {timestamps: true} //za createdAT, updatedAt SAMO AKO JE TRUE DODATO
