@@ -2,6 +2,19 @@ import Phaser from '../lib/phaser.js';
 import { SCENE_KEYS } from '../common/scene-keys.js';
 import { ASSET_KEYS } from '../common/assets.js';
 
+// Prijem playerId-a od React aplikacije (:3000)
+window.addEventListener('message', (event) => {
+    if (event.origin !== 'http://localhost:3000') return;
+    if (event.data && event.data.playerId) {
+        localStorage.setItem('playerId', event.data.playerId);
+        console.log('Primljen playerId od React-a:', event.data.playerId);
+    }
+});
+
+// Zatraži playerId od prozora koji je otvorio igru
+if (window.opener) {
+    window.opener.postMessage({ type: 'REQUEST_PLAYER_ID' }, 'http://localhost:3000');
+}
 const DATA_KEYS = Object.freeze({
     ROTATION_SPEED: 'ROTATION_SPEED'
 

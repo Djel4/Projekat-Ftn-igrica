@@ -10,11 +10,13 @@ import { connectDB } from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 const app = express();
 
-
 app.use(cors({
-    origin: "http://localhost:3000", //adresa na kojoj je frontend, moze biti i adresa na kojoj ce biti hostovan frontend
-    credentials: true //dozvoljava slanje cookia
-})); // dodato po savetu sa interneta
+    origin: ['http://localhost:3000', 'http://localhost:8080'],
+    credentials: true,
+}));
+ //adresa na kojoj je frontend, moze biti i adresa na kojoj ce biti hostovan frontend
+ //dozvoljava slanje cookia
+ // dodato po savetu sa interneta
 
 app.use(express.json()); //funkcija izmedju requesta i responsa
 
