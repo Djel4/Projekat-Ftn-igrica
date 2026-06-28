@@ -5,6 +5,7 @@ import './assets/styles/bootstrap.min.css';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LeaderboardScreen from './screens/LeaderboardScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import { 
   createBrowserRouter, 
   createRoutesFromElements,
@@ -26,9 +27,10 @@ const router = createBrowserRouter(
     <Route index={true} path="/" element={<HomeScreen/>}></Route>
     <Route path="/game" element={<GameScreen />} />
     <Route path="/login" element={<LoginScreen />} />
-<Route path="/register" element={<RegisterScreen />} />
-<Route path="/leaderboard" element={<LeaderboardScreen />} />
-    </Route>
+    <Route path="/register" element={<RegisterScreen />} />
+    <Route path="/profile" element={<ProfileScreen />} />
+    <Route path="/leaderboard" element={<LeaderboardScreen />} />
+  </Route>
 )
 );
 

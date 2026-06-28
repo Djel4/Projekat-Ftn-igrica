@@ -31,9 +31,11 @@ const Header = () => {
                         <Nav className='ms-auto'>
                             {playerId ? (
                                 <>
-                                    <Nav.Link disabled>
-                                        <FaUser /> {playerName}
-                                    </Nav.Link>
+                                    <LinkContainer to="/profile">
+                                        <Nav.Link>
+                                            <FaUser /> {playerName}
+                                        </Nav.Link>
+                                    </LinkContainer>
                                     <Nav.Link onClick={handleLogout}>
                                         <FaSignOutAlt /> Logout
                                     </Nav.Link>
