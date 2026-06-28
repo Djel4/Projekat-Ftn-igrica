@@ -49,6 +49,9 @@ const Header = () => {
                                     </LinkContainer>
                                 </>
                             )}
+                            <LinkContainer to="/shop">
+                            <Nav.Link>Shop</Nav.Link>
+                            </LinkContainer>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

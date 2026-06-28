@@ -6,7 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LeaderboardScreen from './screens/LeaderboardScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import ShopScreen from './screens/ShopScreen';
+import ShopScreen from './screens/shopScreen';
 import { 
   createBrowserRouter, 
   createRoutesFromElements,

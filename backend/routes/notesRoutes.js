@@ -4,7 +4,8 @@ import { protect } from "../middleware/authMiddleware.js";
 import { registerPlayer, loginPlayer } from "../controllers/authControllers.js";
 import { getAllNotes, getElementById, updateAcc, deleteAAcc, addCoins } from "../controllers/playerControllers.js";
 import { getLeaderBoard, getNewBestScore, GetplayersBestScore } from "../controllers/scoreControllers.js";
-import { getPlayerSkins, setActiveSkin, unlockSkin, buySkin } from "../controllers/skinController.js";
+import { getPlayerSkins, setActiveSkin, unlockSkin, buySkin,unequipSkin } from "../controllers/skinController.js";
+
 const router = express.Router();
 
 //login i register rute
@@ -25,7 +26,7 @@ router.get("/new-best", getNewBestScore);
 router.get("/:id/skins", getPlayerSkins);
 router.put("/:id/skins/active", setActiveSkin);
 router.put("/:id/skins/buy", buySkin);
-
+router.put("/:id/skins/unequip", unequipSkin);
 //crud rrute 
 router.get("/", getAllNotes);
 

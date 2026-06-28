@@ -4,6 +4,25 @@ import { PreloadScene } from './scenes/preload-scene.js';
 import { SCENE_KEYS } from './common/scene-keys.js';
 import { GameOverScene } from './scenes/game-over-scene.js';
 import { TitleScene } from './scenes/title-scene.js';  
+
+window.addEventListener('message', async (event) => {
+    if (event.origin !== 'http://localhost:3000') return;
+    if (event.data && event.data.playerId) {
+        localStorage.setItem('playerId', event.data.playerId);
+        try {
+            const res = await fetch(`http://localhost:5001/api/notes/${event.data.playerId}`);
+            const player = await res.json();
+            window.PLAYER_SKIN = player.currentSkin || 'defaultSkin';
+            console.log('Aktivan skin:', window.PLAYER_SKIN);
+        } catch (err) {
+            window.PLAYER_SKIN = 'defaultSkin';
+        }
+    }
+});
+
+if (window.opener) {
+    window.opener.postMessage({ type: 'REQUEST_PLAYER_ID' }, 'http://localhost:3000');
+}
 const gameConfig = {
     type: Phaser.CANVAS, 
     pixelArt: true,
@@ -20,7 +39,7 @@ const gameConfig = {
         default: 'arcade',
         arcade: {
             gravity: { y: 0, X:0 }, 
-            debug: true       
+            debug: false       
         },
     },
 };

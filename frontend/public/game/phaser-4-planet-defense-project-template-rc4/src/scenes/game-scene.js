@@ -1,20 +1,8 @@
 import Phaser from '../lib/phaser.js';
 import { SCENE_KEYS } from '../common/scene-keys.js';
-import { ASSET_KEYS } from '../common/assets.js';
+import { ASSET_KEYS, SKIN_TO_PLANET_ASSET, ANIMATED_PLANET_SKINS } from '../common/assets.js';
 
-// Prijem playerId-a od React aplikacije (:3000)
-window.addEventListener('message', (event) => {
-    if (event.origin !== 'http://localhost:3000') return;
-    if (event.data && event.data.playerId) {
-        localStorage.setItem('playerId', event.data.playerId);
-        console.log('Primljen playerId od React-a:', event.data.playerId);
-    }
-});
 
-// Zatraži playerId od prozora koji je otvorio igru
-if (window.opener) {
-    window.opener.postMessage({ type: 'REQUEST_PLAYER_ID' }, 'http://localhost:3000');
-}
 const DATA_KEYS = Object.freeze({
     ROTATION_SPEED: 'ROTATION_SPEED'
 
@@ -55,8 +43,21 @@ export class GameScene extends Phaser.Scene {
          this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_2, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_2).setAlpha(0.4);
           this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_3, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_3).setAlpha(0.4);
 
-        this.#planet = this.physics.add.sprite(this.scale.width / 2, this.scale.height / 2, ASSET_KEYS.PLANET, 0).play(ASSET_KEYS.PLANET);
-        this.#planet.body.setCircle(30, 18, 18);
+       const skin = window.PLAYER_SKIN || 'defaultSkin';
+        const planetAsset = SKIN_TO_PLANET_ASSET[skin] || ASSET_KEYS.PLANET;
+
+ this.#planet = this.physics.add.sprite(this.scale.width / 2, this.scale.height / 2, planetAsset, 0);
+
+        if (ANIMATED_PLANET_SKINS.includes(skin)) {
+            this.#planet.play(planetAsset);
+        }
+
+        // prisili sve planete na istu velicinu kao default (96x96)
+        this.#planet.setDisplaySize(96, 96);
+
+        // namesti collision krug prema stvarnoj velicini teksture
+        const r = this.#planet.width / 2;
+        this.#planet.body.setCircle(r, this.#planet.width / 2 - r, this.#planet.height / 2 - r);
         this.#health = 3;
         this.#planetHealthContainer = this.add.container(this.scale.width / 2, this.#planet.y + 50, [
             this.add.sprite(-18, 0, ASSET_KEYS.HEART, 0).play(ASSET_KEYS.HEART),
@@ -64,7 +65,7 @@ export class GameScene extends Phaser.Scene {
             this.add.sprite(18, 0, ASSET_KEYS.HEART, 0).play(ASSET_KEYS.HEART),
         ]);
 
-        this.#player = this.add.image(200, 200, ASSET_KEYS.SHIP);
+        this.#player = this.add.image(200, 200, ASSET_KEYS.SHIP).setDepth(1);
         this.#playerAngleinRadians = 0;
         this.#updatePlayerPosition();
 
@@ -281,14 +282,7 @@ if (this.#enemySpeed < 200){//limiti
         this.#planetHealthContainer.getAt(this.#health).destroy();
 
         this.cameras.main.shake(150, 0.02);
-        this.tweens.add({
-            targets: this.#planet,
-            scaleX: 1.1,
-            scaleY: 0.9,
-            duration: 100,
-            ease: Phaser.Math.Easing.Quadratic.InOut,
-            yoyo: true,
-        });
+       
           this.sound.play(ASSET_KEYS.FX_SHOT, { 
        
         volume: 0.1,
