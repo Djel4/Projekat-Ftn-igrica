@@ -1,9 +1,10 @@
-
-
-import express from "express"
-import { getElementById, getAllNotes, updateAcc, deleteAAcc, getNewBestScore, registerPlayer, loginPlayer, GetplayersBestScore, getLeaderBoard} from "../controllers/notesController.js";
+import express from "express";
 import { protect } from "../middleware/authMiddleware.js";
-import { addCoins } from "../controllers/notesController.js";
+
+import { registerPlayer, loginPlayer } from "../controllers/authControllers.js";
+import { getAllNotes, getElementById, updateAcc, deleteAAcc, addCoins } from "../controllers/playerControllers.js";
+import { getLeaderBoard, getNewBestScore, GetplayersBestScore } from "../controllers/scoreControllers.js";
+
 const router = express.Router();
 
 //login i register rute
@@ -19,6 +20,11 @@ router.get("/global-best",getNewBestScore);
 router.put("/save-score", GetplayersBestScore);
 
 router.get("/new-best", getNewBestScore);
+
+//za skinove 
+router.get("/:id/skins", getPlayerSkins);
+router.put("/:id/skins/active", setActiveSkin);
+router.put("/:id/skins/buy", buySkin);
 
 //crud rrute 
 router.get("/", getAllNotes);
