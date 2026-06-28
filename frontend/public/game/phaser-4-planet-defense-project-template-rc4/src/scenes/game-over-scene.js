@@ -5,25 +5,34 @@ import { ASSET_KEYS } from '../common/assets.js';
 
 export class GameOverScene extends Phaser.Scene {
     #score;
+  
      constructor(){
         super({
             key: SCENE_KEYS.GAME_OVER_SCENE,
 
         });
-
     }
     init(data)
     {
-        this.#score = data.score;
-
+        this.#score = data.score; 
     }
     create() {
-        const scaleX = this.sys.game.config.width / 640;
-        const scaleY = this.sys.game.config.height / 360;
+
+        window.addEventListener('message', (event) => {
+         if (event.origin !== 'http://localhost:3000') return;
+        if (event.data.playerId) {
+        localStorage.setItem('playerId', event.data.playerId);
+        }   
+            });
+
+
+        const scaleX = this.scale.width / 640;
+        const scaleY = this.scale.height / 360; 
         this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_1, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_1).setAlpha(0.4);
         this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_2, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_2).setAlpha(0.4);
         this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_3, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_3).setAlpha(0.4);
-
+        
+        
         this.add.text(this.scale.width / 2, 350, 'GAME OVER', {
             fontSize: '32px'
 
@@ -33,7 +42,17 @@ export class GameOverScene extends Phaser.Scene {
             fontSize: '22px'
 
         }).setOrigin(0.5);
+        
+        const backButton = this.add.text(this.scale.width / 2, 60, 'BACK TO MENU', {
+        fontSize: '20px',
+        color: '#ffffff',
+        backgroundColor: '#333333',
+        padding: { x: 20, y: 10 }
+        }).setOrigin(0.5).setInteractive();
 
+        backButton.on('pointerdown', () => {
+        window.close();
+});
          this.add.text(this.scale.width / 2, 100, `SCORE: ${this.#score}`, {
             fontSize: '24px'
 
@@ -50,6 +69,28 @@ export class GameOverScene extends Phaser.Scene {
                 });
 
         });
+       this.#saveScore();
         this.cameras.main.fadeIn(500);
     }
+        async #saveScore() {
+    const playerId = localStorage.getItem('playerId');
+    console.log('playerId:', playerId);
+    console.log('score:', this.#score);
+    if (!playerId) return;
+
+    try {
+        const response = await fetch('http://localhost:5001/api/notes/save-score', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: playerId, score: this.#score })
+        });
+        const data = await response.json();
+        console.log('Score saved:', data);
+    } catch (error) {
+        console.error('Error saving score:', error);
+    }
+}
+
+    
+    
 }

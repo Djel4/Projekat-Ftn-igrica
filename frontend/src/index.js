@@ -2,6 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './assets/styles/bootstrap.min.css';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import LeaderboardScreen from './screens/LeaderboardScreen';
 import { 
   createBrowserRouter, 
   createRoutesFromElements,
@@ -16,11 +19,15 @@ import reportWebVitals from './reportWebVitals';
 
 import HomeScreen from './screens/HomeScreens';
 import GameScreen from './screens/GameScreen';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
   <Route path="/" element={<App />}>
     <Route index={true} path="/" element={<HomeScreen/>}></Route>
     <Route path="/game" element={<GameScreen />} />
+    <Route path="/login" element={<LoginScreen />} />
+<Route path="/register" element={<RegisterScreen />} />
+<Route path="/leaderboard" element={<LeaderboardScreen />} />
     </Route>
 )
 );
@@ -28,11 +35,9 @@ const router = createBrowserRouter(
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
     <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
+  </Provider>
 );
 
 reportWebVitals();

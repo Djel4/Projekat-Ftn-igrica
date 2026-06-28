@@ -292,6 +292,16 @@ export async function deleteAAcc (req, res) {
            console.error("Error in deleteNode cotroler", error)
         res.status(500).json({message: "Internal server error" });
     }
-
-    
+}
+export async function addCoins(req, res) {
+    try {
+        const { coins } = req.body;
+        const player = await Note.findById(req.params.id);
+        if (!player) return res.status(404).json({ message: "Player not found" });
+        player.coins += coins;
+        await player.save();
+        res.status(200).json({ message: "Coins added!", coins: player.coins });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
 }

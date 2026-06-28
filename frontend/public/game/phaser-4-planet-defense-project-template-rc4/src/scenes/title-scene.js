@@ -14,8 +14,8 @@ export class TitleScene extends Phaser.Scene {
     }
  
     create() {
-        const scaleX = this.sys.game.config.width / 640;
-        const scaleY = this.sys.game.config.height / 360;
+        const scaleX = this.scale.width / 640;
+        const scaleY = this.scale.height / 360;
         this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_1, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_1).setAlpha(0.4);
         this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_2, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_2).setAlpha(0.4);
         this.add.sprite(0, 0, ASSET_KEYS.BACKGROUND_3, 0).setOrigin(0).setScale(scaleX, scaleY).play(ASSET_KEYS.BACKGROUND_3).setAlpha(0.4);
