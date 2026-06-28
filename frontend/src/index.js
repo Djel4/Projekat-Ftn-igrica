@@ -6,6 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LeaderboardScreen from './screens/LeaderboardScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import ShopScreen from './screens/ShopScreen';
 import { 
   createBrowserRouter, 
   createRoutesFromElements,
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
     <Route path="/register" element={<RegisterScreen />} />
     <Route path="/profile" element={<ProfileScreen />} />
     <Route path="/leaderboard" element={<LeaderboardScreen />} />
+    <Route path="/shop" element={<ShopScreen />} />
   </Route>
 )
 );

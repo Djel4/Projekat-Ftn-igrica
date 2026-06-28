@@ -25,19 +25,37 @@ export async function getNewBestScore(req, res) {
     }
 }
 
+
 export async function GetplayersBestScore(req, res) {
     const { id, score } = req.body;
     try {
         const currPlayer = await Note.findById(id);
+        if (!currPlayer) {
+            return res.status(404).json({ message: "Player not found" });
+        }
 
+        // coins = pola skora (npr. score 10 -> 5 coins)
+        const earnedCoins = Math.floor(score / 2);
+        currPlayer.coins += earnedCoins;
+
+        // best score se menja samo ako je novi veći
+        let isNewBest = false;
         if (score > currPlayer.score) {
             currPlayer.score = score;
-            await currPlayer.save();
-            return res.status(200).json({ message: "New best personal score is: ", score: currPlayer.score });
-        } else {
-            res.status(200).json({ message: "Game over, you havent beaten your score YET (dont blame dev)" });
+            isNewBest = true;
         }
+
+        await currPlayer.save();
+
+        return res.status(200).json({
+            message: isNewBest ? "New best score!" : "Game over, score not beaten.",
+            score: currPlayer.score,
+            earnedCoins,
+            coins: currPlayer.coins,
+            isNewBest,
+        });
     } catch (error) {
-        res.status(400).json({ message: "Error, we could load your best an d this score " });
+        console.error("Error in GetplayersBestScore", error);
+        res.status(400).json({ message: "Error saving score" });
     }
 }
