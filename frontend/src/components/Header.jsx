@@ -32,6 +32,11 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className='ms-auto'>
+                            <LinkContainer to="/asteroids">
+                                <Nav.Link>Asteroids
+                                    </Nav.Link>
+                            </LinkContainer>
+                            
                             {playerId ? (
                                 <>
                                     <LinkContainer to="/profile">

@@ -36,7 +36,7 @@ const noteSchema = new mongoose.Schema(
     default: 0
     },
 
-    roles: {
+    role: {
     type: String,
     enum: ["user", "admin"],
     default: "user"

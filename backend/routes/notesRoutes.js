@@ -1,5 +1,5 @@
 import express from "express";
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 
 import { registerPlayer, loginPlayer } from "../controllers/authControllers.js";
 import { getAllNotes, getElementById, updateAcc, deleteAAcc, addCoins } from "../controllers/playerControllers.js";

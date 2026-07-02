@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import notesRoutes from "./routes/notesRoutes.js"
 import { connectDB } from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
-import cookieParser from "cookie-parser";
+
 
 const app = express();
 

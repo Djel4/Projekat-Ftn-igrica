@@ -8,6 +8,9 @@ import LeaderboardScreen from './screens/LeaderboardScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ShopScreen from './screens/shopScreen';
 import AdminScreen from './screens/AdminScreen';
+import AsteroidsScreen from './screens/NASAAsteroidScreen';
+
+
 import { 
   createBrowserRouter, 
   createRoutesFromElements,
@@ -34,6 +37,7 @@ const router = createBrowserRouter(
     <Route path="/leaderboard" element={<LeaderboardScreen />} />
     <Route path="/shop" element={<ShopScreen />} />
     <Route path="/admin" element={<AdminScreen />} />
+    <Route path="/asteroids" element={<AsteroidsScreen />} />
   </Route>
 )
 );

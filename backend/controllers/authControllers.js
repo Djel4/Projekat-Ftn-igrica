@@ -53,9 +53,10 @@ export async function loginPlayer(req, res) {
         if (!matching) {
             return res.status(404).json({ message: "Name or password are wrong try again" });
         }
-        //dodato za generisanje tokena
+
+        // token sada sadrzi i role
         const token = jwt.sign(
-            { id: player._id, name: player.name },
+            { id: player._id, name: player.name, role: player.role },
             process.env.JWT_SECRET,
             { expiresIn: "7d" }
         );
@@ -71,21 +72,11 @@ export async function loginPlayer(req, res) {
             message: "Congrats your login is correct have fun playing (dont blame dev for bugs)",
             id: player._id,
             currentSkin: player.currentSkin,
+            role: player.role,   // <-- kljucno: rola ide frontendu
         });
     } catch (error) {
         console.error("Error in loginPlayer method", error);
         res.status(500).json({ message: "Internal server error (blame dev)" });
     }
-    const token = jwt.sign(
-    { id: player._id, name: player.name, role: player.role },  
-    process.env.JWT_SECRET,
-    { expiresIn: "7d" }
-);
-
-return res.status(200).json({
-    message: "...",
-    id: player._id,
-    currentSkin: player.currentSkin,
-    role: player.role,   
-});
 }
+
