@@ -9,10 +9,12 @@ const Header = () => {
     const navigate = useNavigate();
     const playerId = localStorage.getItem('playerId');
     const playerName = localStorage.getItem('playerName');
+    const playerRole = localStorage.getItem('playerRole');
 
     const handleLogout = () => {
         localStorage.removeItem('playerId');
         localStorage.removeItem('playerName');
+        localStorage.removeItem('playerRole');
         navigate('/');
     };
 
@@ -27,6 +29,7 @@ const Header = () => {
                             Creation by Djel4
                         </Navbar.Brand>
                     </LinkContainer>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className='ms-auto'>
                             {playerId ? (
@@ -36,6 +39,17 @@ const Header = () => {
                                             <FaUser /> {playerName}
                                         </Nav.Link>
                                     </LinkContainer>
+
+                                    <LinkContainer to="/shop">
+                                        <Nav.Link>Shop</Nav.Link>
+                                    </LinkContainer>
+
+                                    {playerRole === 'admin' && (
+                                        <LinkContainer to="/admin">
+                                            <Nav.Link>Admin</Nav.Link>
+                                        </LinkContainer>
+                                    )}
+
                                     <Nav.Link onClick={handleLogout}>
                                         <FaSignOutAlt /> Logout
                                     </Nav.Link>
@@ -49,9 +63,6 @@ const Header = () => {
                                     </LinkContainer>
                                 </>
                             )}
-                            <LinkContainer to="/shop">
-                            <Nav.Link>Shop</Nav.Link>
-                            </LinkContainer>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

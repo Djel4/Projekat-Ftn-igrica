@@ -34,7 +34,14 @@ const noteSchema = new mongoose.Schema(
     coins: { //koristim kao valutu u igri 
     type: Number,
     default: 0
-}
+    },
+
+    roles: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user"
+},
+
 
     
 },

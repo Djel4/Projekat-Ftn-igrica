@@ -8,6 +8,11 @@ import { getPlayerSkins, setActiveSkin, unlockSkin, buySkin,unequipSkin } from "
 
 const router = express.Router();
 
+//za admina
+router.get("/", protect, admin, getAllNotes);        // lista svih korisnika — samo admin
+router.delete("/:id", protect, admin, deleteAAcc);   // brisanje bilo kog naloga — samo admin
+
+
 //login i register rute
 router.post("/register",registerPlayer);
 

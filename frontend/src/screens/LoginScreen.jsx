@@ -26,6 +26,7 @@ const LoginScreen = () => {
             if (response.ok) {
                 localStorage.setItem('playerId', data.id);
                 localStorage.setItem('playerName', name);
+                localStorage.setItem('playerRole', data.role);
                 navigate('/');
             } else {
                 setError(data.message);

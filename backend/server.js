@@ -8,7 +8,11 @@ import cookieParser from "cookie-parser";
 import notesRoutes from "./routes/notesRoutes.js"
 import { connectDB } from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
+import cookieParser from "cookie-parser";
+
 const app = express();
+
+app.use(cookieParser());//dodat cookie parser
 
 app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:8080'],
