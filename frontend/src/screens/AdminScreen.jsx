@@ -18,7 +18,7 @@ const AdminScreen = () => {
             return;
         }
         loadUsers();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+       
     }, []);
 
     const loadUsers = async () => {
@@ -41,7 +41,7 @@ const AdminScreen = () => {
     };
 
     const handleDelete = async (id, name) => {
-        if (!window.confirm(`Obrisati nalog "${name}"? Ovo se ne moze poništiti.`)) {
+        if (!window.confirm(`Delete account "${name}"? This cannot be undone.`)) {
             return;
         }
         setMessage('');
@@ -53,7 +53,7 @@ const AdminScreen = () => {
             });
             const data = await response.json();
             if (response.ok) {
-                setMessage(`Nalog "${name}" je obrisan.`);
+                setMessage(`Account "${name}" is deleted from galaxy.`);
                 await loadUsers();
             } else {
                 setError(data.message || 'Could not delete user.');

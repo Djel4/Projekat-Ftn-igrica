@@ -72,7 +72,7 @@ export async function loginPlayer(req, res) {
             message: "Congrats your login is correct have fun playing (dont blame dev for bugs)",
             id: player._id,
             currentSkin: player.currentSkin,
-            role: player.role,   // <-- kljucno: rola ide frontendu
+            role: player.role,
         });
     } catch (error) {
         console.error("Error in loginPlayer method", error);

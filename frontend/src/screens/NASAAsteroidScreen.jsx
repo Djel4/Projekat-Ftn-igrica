@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
-// ============================================================
-//  NASA API EKRAN - prikazuje prave asteroide blizu Zemlje
-//  API: NASA NeoWs (Near Earth Object Web Service)
-//  Kljuc uzimas besplatno na https://api.nasa.gov
-//  DEMO_KEY radi za testiranje ali ima strog limit (par poziva/sat)
-// ============================================================
 const NASA_API_KEY = '18nb4gcwPYPBwLH4VDR4GQydCoADJssSLfRHvqD6'; //moj licni key
 
 const AsteroidsScreen = () => {
-    // --- STANJA (state) ---
-    // asteroids: lista asteroida koju cemo prikazati
-    // date: danasnji datum (za naslov)
-    // loading: dok se podaci ucitavaju, prikazujemo "Scanning..."
-    // error: ako fetch ne uspe, prikazujemo poruku
     const [asteroids, setAsteroids] = useState([]);
     const [date, setDate] = useState('');
     const [loading, setLoading] = useState(true);
@@ -22,50 +10,50 @@ const AsteroidsScreen = () => {
     // useEffect sa [] na kraju = izvrsava se JEDNOM, kad se ekran otvori
     useEffect(() => {
         const fetchAsteroids = async () => {
-            // 1) napravi danasnji datum u formatu koji NASA trazi: YYYY-MM-DD
+            //za danasnji datum
             const today = new Date().toISOString().split('T')[0];
             setDate(today);
 
             try {
-                // 2) pozovi NASA API (start i end datum su isti = samo danas)
+                // poziva nasin ip
                 const url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=${NASA_API_KEY}`;
                 const response = await fetch(url);
                 const data = await response.json();
 
-                // 3) ako API vrati gresku (npr. istekao limit kljuca)
+                // ako vrati gresku
                 if (!response.ok) {
                     setError(data.error?.message || 'Could not load asteroid data.');
                     return;
                 }
 
-                // 4) NASA vraca asteroide grupisane PO DATUMU,
-                //    pa uzimamo listu bas za danasnji datum
+                //NASA vraca asteroide grupisane po datumu
+                //    pa uzimamo lista za danasnji datum
                 const list = data.near_earth_objects[today] || [];
 
-                // 5) iz svakog asteroida izvlacimo samo ono sto nam treba
-                //    (originalni odgovor ima mnogo vise polja)
+                // iz svakog asteroida izvlacimo samo ono sto nam treba
+               
                 const parsed = list.map((a) => {
                     const approach = a.close_approach_data[0]; // podaci o priblizavanju
                     return {
                         id: a.id,
-                        // ime dolazi kao "(2024 AB1)" pa sklanjamo zagrade
+                        // ime dolazi kao 2024 AB1 pa se sklanjaju zagrade
                         name: a.name.replace(/[()]/g, ''),
-                        // da li je NASA oznacila asteroid kao potencijalno opasan
+                        // da li je potencijalno opasan
                         hazardous: a.is_potentially_hazardous_asteroid,
-                        // najveci procenjeni precnik u metrima (zaokruzen)
+                        // najveci procenjeni precnik u metrima
                         diameterMax: Math.round(a.estimated_diameter.meters.estimated_diameter_max),
                         // brzina priblizavanja u km/h
                         velocity: Math.round(approach?.relative_velocity?.kilometers_per_hour || 0),
-                        // koliko ce "promasiti" Zemlju, u km
+                        // koliko ce omasiti zemlju
                         missKm: Math.round(approach?.miss_distance?.kilometers || 0),
                     };
                 })
-                // 6) sortiramo po velicini - najveci asteroid prvi
+                //sortira po velicini
                 .sort((x, y) => y.diameterMax - x.diameterMax);
 
                 setAsteroids(parsed);
             } catch (err) {
-                // greska u mrezi / serveru
+                // greska u mrezi
                 setError('Server error, try again later.');
             } finally {
                 // u svakom slucaju sklanjamo "loading"
@@ -76,7 +64,7 @@ const AsteroidsScreen = () => {
         fetchAsteroids();
     }, []);
 
-    // --- PRIKAZ (render) ---
+   
     return (
         <div style={styles.wrapper}>
             <h1 style={styles.title}>NEAR-EARTH ASTEROIDS</h1>
@@ -84,16 +72,16 @@ const AsteroidsScreen = () => {
                 Live data from NASA {date && `· ${date}`}
             </p>
 
-            {/* dok se ucitava */}
+            
             {loading && <p style={styles.info}>Scanning the skies...</p>}
 
-            {/* ako je greska */}
+          
             {error && <div style={styles.errorBox}>{error}</div>}
 
-            {/* kad su podaci spremni (nema loading ni error) */}
+         
             {!loading && !error && (
                 <>
-                    {/* mali rezime: koliko ukupno i koliko opasnih */}
+                   
                     <p style={styles.count}>
                         {asteroids.length} objects tracked today ·{' '}
                         <span style={{ color: '#ff8080' }}>
@@ -101,7 +89,7 @@ const AsteroidsScreen = () => {
                         </span>
                     </p>
 
-                    {/* mreza kartica - jedna kartica po asteroidu */}
+               
                     <div style={styles.grid}>
                         {asteroids.map((a) => (
                             <div
@@ -113,12 +101,12 @@ const AsteroidsScreen = () => {
                                 }}
                             >
                                 <div style={styles.cardHeader}>
-                                    <span style={styles.rock}>☄️</span>
+                                    <span style={styles.rock}>🪨</span>
                                     <span style={styles.name}>{a.name}</span>
                                 </div>
 
-                                {/* upozorenje se prikazuje samo ako je opasan */}
-                                {a.hazardous && <div style={styles.hazard}>⚠ HAZARDOUS</div>}
+                               
+                                {a.hazardous && <div style={styles.hazard}>HAZARDOUS DANGER</div>}
 
                                 <div style={styles.row}>
                                     <span style={styles.rowLabel}>Diameter</span>
@@ -141,7 +129,6 @@ const AsteroidsScreen = () => {
     );
 };
 
-// --- STILOVI (svemirska tema, isto kao ostali ekrani) ---
 const styles = {
     wrapper: {
         minHeight: '80vh',

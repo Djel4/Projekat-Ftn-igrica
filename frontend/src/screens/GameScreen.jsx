@@ -5,7 +5,7 @@ const GameScreen = () => {
     const navigate = useNavigate();
     const gameWindowRef = useRef(null);
 
-    // Slušamo poruke od igre (:8080). Kad igra zatraži playerId, pošaljemo joj ga.
+    // Sluša poruke od igre (:8080). Kad igra zatraži playerId, pošalje joj ga
     useEffect(() => {
         const handleMessage = (event) => {
             if (event.origin !== "http://localhost:8080") return;

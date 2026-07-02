@@ -22,7 +22,7 @@ const LeaderboardScreen = () => {
 
     return (
         <Container className="mt-5">
-            <h1 className="text-center fw-bold mb-4">🏆 LEADERBOARD</h1>
+            <h1 className="text-center fw-bold mb-4"> LEADERBOARD</h1>
             {loading ? (
                 <p className="text-center">Loading...</p>
             ) : (
